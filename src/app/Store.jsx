@@ -21,5 +21,6 @@ const persistConfig = {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
+        immutableCheck: false, // Disable the ImmutableStateInvariantMiddleware
       }).concat(ApiFetch.middleware),
   });
