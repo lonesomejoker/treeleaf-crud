@@ -299,7 +299,7 @@ const App = () => {
           </div>
         </div>
       </div>
-      <ListTable validate={{validate}}/>
+      <ListTable />
     </>
   );
 };

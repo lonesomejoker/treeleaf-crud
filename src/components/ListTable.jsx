@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUser, editItem } from "../app/slices/DetailSlice";
 import InputField from "./InputField";
 
-const ListTable = ({validate}) => {
+const ListTable = () => {
   const dispatch = useDispatch();
   const { list } = useSelector((state) => state.listslice);
 
