@@ -33,7 +33,7 @@ const App = () => {
   }
   
   // handling image files
-  const [image, setImage] = React.useState([]);
+  const [image, setImage] = useState([]);
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     const isValid = selectedFiles.every((file) => file.type === "image/png");
