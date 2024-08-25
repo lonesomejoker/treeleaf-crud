@@ -7,19 +7,19 @@ import { RxCross1 } from "react-icons/rx";
 import { useDispatch } from "react-redux";
 import { listData } from "./app/slices/DetailSlice";
 import ListTable from "./components/ListTable";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const dispatch = useDispatch();
-
+  const navigate=useNavigate();
   //query hook of RTK Query
   const { data, error, isLoading } = useGetAllCountriesQuery();
-  const countriesList = [];
-
+  let countriesList = [];
   data?.forEach((item) => {
-    const openData = item.name.common;
-    countriesList.push(openData);
+    countriesList.push(item.name.common);
   });
   //console.log("countries:", countriesList);
+
   if (isLoading) {
     return <h1 className="text-xl font-[500] text-center">Loading...</h1>;
   }
@@ -212,13 +212,15 @@ const App = () => {
                   error={errors.country}
                   required
                 />
-
-                <button
-                  className=" drop-shadow-lg bg-green-400 p-3 text-[600] hover:bg-green-500 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tl-xl rounded-br-xl"
+                <section className=" flex justify-between gap-x-3">
+                <button 
+                  className=" flex-1 drop-shadow-lg bg-green-400 p-3 text-[600] hover:bg-green-500 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tl-xl rounded-br-xl"
                   type="submit"
                 >
                   Add User
                 </button>
+                <button onClick={()=>navigate("/profile")} className="  drop-shadow-lg bg-indigo-500 p-3 text-[600] hover:bg-blue-400 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tr-xl rounded-bl-xl">Profiles</button>
+                </section>
               </form>
             </section>
           </div>
@@ -239,7 +241,7 @@ const App = () => {
               />
               <label
                 htmlFor="fileInput"
-                className=" bg-emerald-400 text-[1.3rem] rounded-t-xl rounded-bl-xl text-white py-3 px-3.5 animate-bounce font-normal"
+                className=" bg-emerald-400 text-[0.9rem] lg:text-[1.3rem] rounded-t-xl rounded-bl-xl text-white py-3 px-3.5 animate-bounce font-normal"
                 title="Upload Image"
               >
                 Upload Profile

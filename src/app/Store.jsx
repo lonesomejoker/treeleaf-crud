@@ -3,6 +3,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { listReducer } from "./slices/DetailSlice";
 import ApiFetch from "../services/ApiFetch";
+import { pageReducer } from "./slices/PaginationSlice";
 
 const persistConfig = {
     key: "root",
@@ -13,6 +14,7 @@ const persistConfig = {
   const reducer = combineReducers({
     [ApiFetch.reducerPath]:ApiFetch.reducer,
     listslice:listReducer,
+    pageslice:pageReducer,
   });
   const persistedReducer = persistReducer(persistConfig, reducer);
   
