@@ -3,6 +3,7 @@ import { FiDelete, FiEdit } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser, editItem } from "../app/slices/DetailSlice";
 import {
+    onChangeDataPerpage,
   onClickCurrentPage,
   onNavigateNext,
   onNavigatePrev,
@@ -230,10 +231,15 @@ const Pagination = () => {
           NEXT
         </h1>
       </div>
-      <footer className=" font-semibold flex">
+      <footer className=" font-semibold flex items-center gap-x-5">
         <h1>
           PAGE: {currentPage} of {totalPage}
         </h1>
+        <select onChange={(event)=>dispatch(onChangeDataPerpage(event.target.value))} className='mx-3 bg-neutral-800 border-2 border-violet-500 rounded-lg p-2 text-[18px] text-white' defaultValue={5}>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+      </select>
       </footer>
     </div>
   );

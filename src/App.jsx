@@ -11,55 +11,9 @@ import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const dispatch = useDispatch();
-  const navigate=useNavigate();
-  //query hook of RTK Query
-  const { data, error, isLoading } = useGetAllCountriesQuery();
-  let countriesList = [];
-  data?.forEach((item) => {
-    countriesList.push(item.name.common);
-  });
-  //console.log("countries:", countriesList);
+  const navigate = useNavigate();
 
-  if (isLoading) {
-    return <h1 className="text-xl font-[500] text-center">Loading...</h1>;
-  }
-
-  if (error) {
-    return (
-      <h1 className="text-xl font-[500] text-center text-red-500">
-        Error fetching countries. Please try again later.
-      </h1>
-    );
-  }
-  
-  // handling image files
-  const [image, setImage] = useState([]);
-  const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    const isValid = selectedFiles.every((file) => file.type === "image/png");
-    if (!isValid) {
-      window.alert("Only PNG format is allowed.");
-      return;
-    }
-    if (image.length + selectedFiles.length > 1) {
-      window.alert("You can only upload one image.");
-      return;
-    }
-  
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result;
-      setImage([base64String]);
-    };
-    reader.readAsDataURL(selectedFiles[0]);
-    e.target.value = null;
-  };
-  
-  const handleDeleteImage = (index) => {
-    setImage((prevImages) => prevImages.filter((_, idx) => idx !== index));
-  };
-  
-  //handling input fields
+  // Handling input fields
   const [form, setForm] = useState({
     full_name: "",
     email: "",
@@ -103,13 +57,41 @@ const App = () => {
     return Object.keys(tempErrors).length === 0;
   };
 
+  // Handling image files
+  const [image, setImage] = useState([]);
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    const isValid = selectedFiles.every((file) => file.type === "image/png");
+    if (!isValid) {
+      window.alert("Only PNG format is allowed.");
+      return;
+    }
+    if (image.length + selectedFiles.length > 1) {
+      window.alert("You can only upload one image.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      setImage([base64String]);
+    };
+    reader.readAsDataURL(selectedFiles[0]);
+    e.target.value = null;
+  };
+
+  const handleDeleteImage = (index) => {
+    setImage((prevImages) => prevImages.filter((_, idx) => idx !== index));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
       const newUser = {
         id: new Date().getTime(),
         ...form,
-        image: image[0] || null,};
+        image: image[0] || null,
+      };
 
       dispatch(listData(newUser));
       alert("Added user to the list");
@@ -126,6 +108,26 @@ const App = () => {
       });
     }
   };
+
+  // RTK Query hook
+  const { data, error, isLoading } = useGetAllCountriesQuery();
+
+  if (isLoading) {
+    return <h1 className="text-xl font-[500] text-center">Loading...</h1>;
+  }
+
+  if (error) {
+    return (
+      <h1 className="text-xl font-[500] text-center text-red-500">
+        Error fetching countries. Please try again later.
+      </h1>
+    );
+  }
+
+  let countriesList = [];
+  data?.forEach((item) => {
+    countriesList.push(item.name.common);
+  });
 
   return (
     <>
@@ -213,13 +215,13 @@ const App = () => {
                   required
                 />
                 <section className=" flex justify-between gap-x-3">
-                <button 
-                  className=" flex-1 drop-shadow-lg bg-green-400 p-3 text-[600] hover:bg-green-500 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tl-xl rounded-br-xl"
-                  type="submit"
-                >
-                  Add User
-                </button>
-                <button onClick={()=>navigate("/profile")} className="  drop-shadow-lg bg-indigo-500 p-3 text-[600] hover:bg-blue-400 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tr-xl rounded-bl-xl">Profiles</button>
+                  <button 
+                    className=" flex-1 drop-shadow-lg bg-green-400 p-3 text-[600] hover:bg-green-500 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tl-xl rounded-br-xl"
+                    type="submit"
+                  >
+                    Add User
+                  </button>
+                  <button onClick={() => navigate("/profile")} className="  drop-shadow-lg bg-indigo-500 p-3 text-[600] hover:bg-blue-400 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tr-xl rounded-bl-xl">Profiles</button>
                 </section>
               </form>
             </section>
@@ -255,47 +257,16 @@ const App = () => {
                         src={item}
                         className="h-36 lg:h-52 w-full rounded-lg "
                       />
-                      <RxCross1
-                        className="text-[35px] absolute right-1 top-1 bg-gray-300 bg-opacity-25 backdrop-blur-sm p-1.5 rounded-lg z-[99]"
+                      <button
+                        className="absolute top-2 right-2"
                         onClick={() => handleDeleteImage(idx)}
-                      />
+                        title="Remove image"
+                      >
+                        <RxCross1 className="text-white text-lg" />
+                      </button>
                     </div>
                   );
                 })}
-              </div>
-            </div>
-            <h1 className=" absolute right-2 top-2 text-gray-200 text-xl font-[500]">
-              Shirish Shrestha
-            </h1>
-
-            <div className="relative z-10 h-full hidden lg:block">
-              <div className="xl:flex justify-between h-full text-white items-end">
-                <div className="content-end text-white">
-                  <h3 className="font-semibold text-sm">CONTACT ME</h3>
-                  <p className="py-3 font-[600]">9810113806</p>
-                  <h1 className="text-[20px] lg:text-[30px] font-bold leading-tight mt-2">
-                    Let's talk about
-                    <br /> Love to hear from you!
-                  </h1>
-                </div>
-                <div className="space-y-8 text-sm lg:text-[16px] xl:text-[18px] content-end xl:mt-0 mt-10">
-                  <section className="flex gap-x-3 hover:translate-x-4 duration-300">
-                    <IoLocationSharp className="text-[#6364f2] text-2xl" />
-                    <section className="space-y-2">
-                      <h2 className="font-bold text-[20px] mb-3">My Address</h2>
-                      <h3 className="text-[18px]">Balambu, Kathmandu, Nepal</h3>
-                    </section>
-                  </section>
-                  <section className="flex gap-x-3 hover:translate-x-4 duration-300">
-                    <IoMail className="text-[#6364f2] text-2xl" />
-                    <section className="text-[20px]">
-                      <h2 className="font-bold text-[20px] mb-2">
-                        How Can I Help?
-                      </h2>
-                      <h3>shakestha@gmail.com</h3>
-                    </section>
-                  </section>
-                </div>
               </div>
             </div>
           </div>
