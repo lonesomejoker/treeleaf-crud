@@ -3,7 +3,7 @@ import { FiDelete, FiEdit } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser, editItem } from "../app/slices/DetailSlice";
 import {
-    onChangeDataPerpage,
+  onChangeDataPerpage,
   onClickCurrentPage,
   onNavigateNext,
   onNavigatePrev,
@@ -11,8 +11,8 @@ import {
 import { AppContext } from "../layout/UserLayout";
 
 const Pagination = () => {
-  const {list}=useSelector((state)=>state.listslice);
-  const { Th,Td } = useContext(AppContext);
+  const { list } = useSelector((state) => state.listslice);
+  const { Th, Td } = useContext(AppContext);
   const dispatch = useDispatch();
   const { currentPage, dataPerPage } = useSelector((state) => state.pageslice);
 
@@ -88,8 +88,12 @@ const Pagination = () => {
           </tr>
         </thead>
         <tbody className=" space-y-1 bg-gray-100">
-          {visibleDatas === 0 ? (
-            <h1>No Any Datas..</h1>
+          {visibleDatas.length === 0 ? (
+            <tr>
+              <td colSpan={8} className=" text-center py-3">
+                No Any Datas..
+              </td>
+            </tr>
           ) : (
             visibleDatas?.map((user, idx) => {
               return (
@@ -235,15 +239,19 @@ const Pagination = () => {
         <h1>
           PAGE: {currentPage} of {totalPage}
         </h1>
-        <select onChange={(event)=>dispatch(onChangeDataPerpage(event.target.value))} className='mx-3 bg-neutral-800 border-2 border-violet-500 rounded-lg p-2 text-[18px] text-white' defaultValue={5}>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-      </select>
+        <select
+          onChange={(event) =>
+            dispatch(onChangeDataPerpage(event.target.value))
+          }
+          className="mx-3 bg-neutral-800 border-2 border-violet-500 rounded-lg p-2 text-[18px] text-white"
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
       </footer>
     </div>
   );
 };
 
 export default Pagination;
-

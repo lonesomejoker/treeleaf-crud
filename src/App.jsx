@@ -262,7 +262,7 @@ const App = () => {
                         onClick={() => handleDeleteImage(idx)}
                         title="Remove image"
                       >
-                        <RxCross1 className="text-white text-lg" />
+                        <RxCross1 className=" text-[2.5rem] bg-white/30 backdrop-blur-lg p-2 rounded-md" />
                       </button>
                     </div>
                   );
