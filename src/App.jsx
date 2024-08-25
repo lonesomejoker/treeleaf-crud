@@ -132,7 +132,7 @@ const App = () => {
   return (
     <>
       <div className="py-5 ">
-        <div className="lg:flex justify-between bg-white/30 backdrop-blur-lg rounded-[15px] p-3 shadow-lg drop-shadow-md">
+        <div className="lg:flex bg-white/30 backdrop-blur-lg rounded-[15px] p-3 shadow-lg drop-shadow-md">
           <div className="xl:w-[39%]">
             <section className="px-3 lg:px-10 py-3 lg:py-12">
               <h2 className="font-semibold text-[23px] pb-2">
@@ -215,18 +215,23 @@ const App = () => {
                   required
                 />
                 <section className=" flex justify-between gap-x-3">
-                  <button 
+                  <button
                     className=" flex-1 drop-shadow-lg bg-green-400 p-3 text-[600] hover:bg-green-500 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tl-xl rounded-br-xl"
                     type="submit"
                   >
                     Add User
                   </button>
-                  <button onClick={() => navigate("/profile")} className="  drop-shadow-lg bg-indigo-500 p-3 text-[600] hover:bg-blue-400 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tr-xl rounded-bl-xl">Profiles</button>
+                  <button
+                    onClick={() => navigate("/profile")}
+                    className="  drop-shadow-lg bg-indigo-500 p-3 text-[600] hover:bg-blue-400 duration-500 hover:translate-y-2 text-white text-xl font-semibold mt-4 rounded-tr-xl rounded-bl-xl"
+                  >
+                    Profiles
+                  </button>
                 </section>
               </form>
             </section>
           </div>
-          <div className="relative xl:flex-1 px-5 lg:px-12 py-6 lg:py-12 rounded-[15px] drop-shadow-md">
+          <div className="relative w-full xl:flex-1 px-5 lg:px-12 py-6 lg:py-12 rounded-[15px] drop-shadow-md">
             <div
               className="absolute inset-0 bg-center bg-cover bg-no-repeat rounded-[15px] contrast-75 brightness-50"
               style={{
@@ -249,7 +254,7 @@ const App = () => {
                 Upload Profile
               </label>
 
-              <div className="grid grid-cols-2 gap-1.5 my-4">
+              <div className=" my-4">
                 {Array.from(image)?.map((item, idx) => {
                   return (
                     <div key={idx} className="relative z-[20]">
@@ -266,10 +271,39 @@ const App = () => {
                       </button>
                     </div>
                   );
-                })}
+                })}   
               </div>
             </div>
-          </div>
+            <div className="relative xl:-bottom-[75%] lg:-bottom-[50%] justify-between z-10 hidden lg:flex lg:flex-col xl:flex-row text-white ">
+                <div className="content-end">
+                  <h3 className="font-semibold text-sm">CONTACT ME</h3>
+                  <p className="py-3 font-[600]">9810113806</p>
+                  <h1 className="text-[20px] lg:text-[30px] font-bold leading-tight mt-2">
+                    Let's talk about
+                    <br /> Love to hear from you!
+                  </h1>
+                </div>
+                <div className="space-y-8 text-sm lg:text-[16px] xl:text-[18px] content-end xl:mt-0 mt-10">
+                  <section className="flex gap-x-3 hover:translate-x-4 duration-300">
+                    <IoLocationSharp className="text-[#6364f2] text-2xl" />
+                    <section className="space-y-2">
+                      <h2 className="font-bold text-[20px] mb-3">My Address</h2>
+                      <h3 className="text-[18px]">Balambu, Kathmandu, Nepal</h3>
+                    </section>
+                  </section>
+                  <section className="flex gap-x-3 hover:translate-x-4 duration-300">
+                    <IoMail className="text-[#6364f2] text-2xl" />
+                    <section className="text-[20px]">
+                      <h2 className="font-bold text-[20px] mb-2">
+                        How Can I Help?
+                      </h2>
+                      <h3>shakestha@gmail.com</h3>
+                    </section>
+                  </section>
+                </div>
+              
+            </div>
+          </div> 
         </div>
       </div>
       <ListTable />
